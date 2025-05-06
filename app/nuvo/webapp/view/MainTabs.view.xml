@@ -1,0 +1,869 @@
+<mvc:View controllerName="nuvo.controller.MainTabs"
+
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+    	 xmlns:ndc="sap.ndc"
+	xmlns:n="sap.f"
+	xmlns:card="sap.f.cards"
+    xmlns:core="sap.ui.core"
+       xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:chart="sap.suite.ui.commons"
+       xmlns:viz="sap.viz.ui5.controls" xmlns:layout="sap.ui.layout"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+     xmlns:cards="sap.ui.integration.widgets.Card"
+    
+    >
+   
+       <Page >
+        <content>
+<HBox
+    class="sapUiSmallMargin noMarginBottom"
+    wrap="NoWrap"
+   justifyContent="{= ${localModel>/SwitchVisible} === true ? 'End' : 'SpaceBetween'}"
+    alignItems="Center"> 
+
+    <!-- Card for Customer Name -->
+    <n:Card class="sapUiMediumMargin" width="270px">
+        <n:header>
+            <card:Header
+                class="myCustomerCard"
+                title="{localModel>/getCustomerBasicDetail/CustomerName}"
+                subtitle="Customer Name"
+                iconSrc="sap-icon://customer" />
+        </n:header>
+    </n:Card>
+
+    <!-- Card for Customer ID -->
+    <n:Card class="sapUiMediumMargin" width="230px">
+        <n:header>
+            <card:Header
+                class="myCustomerCard"
+                title="{localModel>/customerID}"
+                subtitle="Customer ID"
+                iconSrc="sap-icon://identifier" />
+        </n:header>
+    </n:Card>
+
+    <!-- Card for Sales Organization -->
+    <n:Card class="sapUiMediumMargin" width="230px">
+        <n:header>
+            <card:Header
+                class="myCustomerCard"
+                title="{localModel>/getCustomerBasicDetail/SalesOrganizationName}"
+                subtitle="Sales Organization"
+                iconSrc="sap-icon://org-chart" />
+        </n:header>
+    </n:Card>
+
+    <!-- Button to Switch Customer -->
+    <Button
+
+        text="Switch Customer"
+        type="Critical"
+        icon="sap-icon://journey-change"
+        press="onNavigateToSwitchCustomer"
+        visible="{localModel>/SwitchVisible}"
+       /> <!-- Allow button to adjust its width automatically -->
+</HBox>
+
+
+
+         <IconTabBar
+                    id="icontabb2ar1"
+                   select=".onTabSelect"
+                    expanded="true"
+                    class="sapUiResponsiveContentPadding myLongText"
+                >
+                    <items>
+                        <IconTabFilter
+                            icon="sap-icon://customer"
+                            iconColor="Positive"
+                            key="icon1"
+                            design="Horizontal"
+                            text="Customer Profile"
+                        >
+                        	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormChange354wideDual"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="Customer Details"
+            
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<core:Title text="Personal Details"  />
+				<Label text="Name" class="custom-label-color"/>
+				<Input id="name" editable="false" value="{localModel>/getCustomerBasicDetail/CustomerName}" />
+				
+				
+				<Label text="Sold To Party" class="custom-label-color"/>
+				<Input value="{localModel>/getCustomerBasicDetail/Customer}" editable="false"/>
+				<Label text="Phone" class="custom-label-color"/>
+				<Input value="{localModel>/getCustomerBasicDetail/TelephoneNumber1}" editable="false"/>
+				<Label text="Sales Organization Name" class="custom-label-color"/>
+				<Input value="{localModel>/getCustomerBasicDetail/SalesOrganizationName}" editable="false"/>
+
+
+
+				<core:Title text="Other Details" class="custom-label-color" />
+                	<Label text="Sales Organization" class="custom-label-color"/>
+				<Input value="{localModel>/getCustomerBasicDetail/SalesOrganization}" editable="false"/>
+				<Label text="Payment Term" class="custom-label-color"/>
+				<Input value="{localModel>/getCustomerBasicDetail/CustomerPaymentTerms}" editable="false"/>
+				<Label text="Payment Term Description" class="custom-label-color"/>
+				<Input value="{localModel>/getCustomerBasicDetail/CustomerPaymentTermsName}" editable="false"/>
+                <!-- <Label text="Business Code" class="custom-label-color" />
+				<Input value="general" editable="false"/> -->
+                <!-- <Label text="Dunning Level" class="custom-label-color" />
+				<Input value="general" editable="false"/> -->
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+                        </IconTabFilter>
+
+                          <IconTabSeparator icon="sap-icon://process" />
+
+                           <IconTabFilter
+                            icon="sap-icon://history"
+                            iconColor="Default"
+                            key="icon1"
+                            design="Horizontal"
+                            text="History"
+                            count="{localModel>/HistoryTotalCount}"
+                        >
+
+
+            <Panel class="sapUiSmallMarginTopBottom">
+                <fb:FilterBar
+                    id="filterbar"
+                    persistencyKey="myPersKey"
+                    useToolbar="false"
+                    search=".onSearch"
+                    filterChange=".onFilterChange"
+                    afterVariantLoad=".onAfterVariantLoad"
+                    showClearOnFB="true" clear="onClear"
+                >
+                    <fb:filterGroupItems>
+                      
+                     
+                        <fb:FilterGroupItem
+                            name="Delivery Status"
+                            label="Delivery Status"
+                            groupName="DeliveryStatGroup"
+                            visibleInFilterBar="true"
+                            
+                        >
+                            <fb:control>
+                                <Select
+                            
+                                    forceSelection="false"
+                                    id="DS"
+                                    name="Name"
+                                    items="{ 
+                                         path: 'localModel>/DeliveryStatus'
+                                }"
+                                >
+                                    <core:Item
+                                        key="{localModel>Name}"
+                                        text="{localModel>Name}"
+                                      
+                                    />
+                                </Select>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem
+                              name="Payment Status"
+                            label="Payment Status"
+                            groupName="PaymentStatGroup"
+                            visibleInFilterBar="true"
+                        >
+                            <fb:control>
+                                <Select
+                                    forceSelection="false"
+                                    id="PS"
+                                    name="Name"
+                            
+                                    items="{ 
+                                      path: 'localModel>/PaymentStatus'
+                                 
+                                   
+                                }"
+                                >
+                                    <core:Item
+                                         key="{localModel>Name}"
+                                        text="{localModel>Name}"    
+                                    />
+                                </Select>
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+                <!-- Icon Tab Bar details (KPI) -->
+                <!-- Icon Tab Bar details (KPI) -->
+           
+<HBox justifyContent="End">
+              <GenericTag
+            text="Total Net Amount: {localModel>/TotalNetAmountAvailable}"
+            design="StatusIconHidden"
+            status="Success"
+            class="sapUiSmallMargin"
+        >
+        
+        </GenericTag>
+          <GenericTag
+            text="Total Net Amount Paid: {localModel>/TotalGrossAmountAvailable}"
+            design="StatusIconHidden"
+            status="Warning"
+            class="sapUiSmallMargin"
+        >
+            
+        </GenericTag>
+        </HBox>
+              </Panel>
+            
+                         <VBox class="sapUiSmallMargin">
+        <Table
+            id="historyTable"
+        
+        items="{localModel>/CustomerHistory}">
+
+           
+        
+            <columns>
+                <Column>
+                    <Text text="Sales Order ID" />
+                </Column>
+                 <Column>
+                    <Text text="Order Placed On" />
+                </Column>
+            
+             
+                 <Column>
+                    <Text text="Delivery Status" />
+                </Column>
+                <Column>
+                    <Text text="Payment Status" />
+                </Column>
+                    <Column>
+                    <Text text="Net Amount" />
+                </Column>
+                   <Column>
+                    <Text text="Tax Amount" />
+                </Column>
+                <Column>
+                    <Text text="Amount Paid" />
+                </Column>
+                
+                   <Column>
+                    <Text text="" />
+                </Column>
+                    <Column>
+                    <Text text="" />
+                </Column>
+             
+            </columns>
+            <items>
+                    <ColumnListItem  highlight="{= ${localModel>InvoiceClearingStatus} === 'Fully Cleared' ? 'Success' : 'Error'}">
+                    <cells>
+                         <Text text="{localModel>SalesOrder}" />
+                         <Text text="{localModel>SalesOrderDate}" />
+                     
+                        
+                              <Text text="{localModel>DeliveryStatusText}" />
+                              <!-- <Text text="{localModel>InvoiceClearingStatus}" /> -->
+                              <Text text="{= ${localModel>InvoiceClearingStatus} ? ${localModel>InvoiceClearingStatus} : 'Not Updated' }" />
+                                   <Text text="{localModel>TotalNetAmount}" />
+                                     <Text text="{= ${localModel>TotalTaxAmount} ? ${localModel>TotalTaxAmount} : '0' }" />
+<Text text="{= ${localModel>TotalGrossAmount} ? ${localModel>TotalGrossAmount} : '0' }" />
+
+                          		<Button
+			id="Materialdetails"
+			text="Details"
+            type="Success"
+			width="100px"
+			press="Onpressquickview"
+			class="sapUiSmallMarginBottom"
+			ariaHasPopup="Dialog"
+            icon="sap-icon://show" />
+                        <!-- <Button
+			id="Materialdetailss"
+			text="See details1"
+            type="Success"
+			width="120px"
+			press="Onpressquickview1"
+			class="sapUiSmallMarginBottom"
+			ariaHasPopup="Dialog"
+            icon="sap-icon://show" /> -->
+                          <Button
+			id="DownloadInvoice"
+			text="Invoice"
+            type="Critical"
+			width="90px"
+			press="OnPressDownloadInvoice"
+			class="sapUiSmallMarginBottom"
+			ariaHasPopup="Dialog"
+            icon="sap-icon://download" />
+                     
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+ 
+    </VBox>
+                        </IconTabFilter>
+
+
+                          <IconTabSeparator icon="sap-icon://process" />
+
+                         <IconTabFilter
+                            icon="sap-icon://pending"
+                            visible="false"
+                            iconColor="Marker"
+                            key="Pending"
+                            design="Horizontal"
+                            text="Pending"
+                               count="{localModel>/PendingTotalCount}"
+                        >
+                                    <VBox class="sapUiSmallMargin">
+          <Table
+            id="Pendingtable"
+        
+        items="{localModel>/PendingOrders}">
+
+           
+        
+            <columns>
+                <Column>
+                    <Text text="Sales Order ID" />
+                </Column>
+                 <Column>
+                    <Text text="Order Placed On" />
+                </Column>
+                <Column>
+                    <Text text="Net Amount" />
+                </Column>
+                <Column>
+                    <Text text="Requested Delivery Date" />
+                </Column>
+                 <Column>
+                    <Text text="Delivery Status" />
+                </Column>
+                
+                   <Column>
+                    <Text text="" />
+                </Column>
+             
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                         <Text text="{localModel>SalesOrder}" />
+                         <Text text="{localModel>SalesOrderDate}" />
+                          <Text text="{localModel>TotalNetAmount}" />
+                          <Text text="{localModel>RequestedDeliveryDate}" />
+                              <Text text="{localModel>DeliveryStatusText}" />
+                          		<Button
+			id="Materialdetailspending"
+			text="See details"
+            type="Success"
+			width="150px"
+			press="Onpressquickview"
+			class="sapUiSmallMarginBottom"
+			ariaHasPopup="Dialog"
+            icon="sap-icon://show" />
+                        
+                     
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+
+    </VBox>
+                        </IconTabFilter>
+
+                          <IconTabSeparator icon="sap-icon://process"   visible="false"/>
+
+                         <IconTabFilter
+                            icon="sap-icon://shipping-status"
+                            iconColor="Critical"
+                              visible="false"
+                            key="Delivered"
+                            design="Horizontal"
+                            text="Delivered"
+                               count="{localModel>/DeliverdTotalCount}"
+                        ><VBox class="sapUiSmallMargin">
+        <Table
+            id="Deliveredtable"
+        
+        items="{localModel>/DeliverdOrder}">
+
+           
+        
+            <columns>
+                <Column>
+                    <Text text="Sales Order ID" />
+                </Column>
+                 <Column>
+                    <Text text="Order Placed On" />
+                </Column>
+                <Column>
+                    <Text text="Net Amount" />
+                </Column>
+                <Column>
+                    <Text text="Requested Delivery Date" />
+                </Column>
+                 <Column>
+                    <Text text="Delivery Status" />
+                </Column>
+                
+                   <Column>
+                    <Text text="" />
+                </Column>
+             
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                         <Text text="{localModel>SalesOrder}" />
+                         <Text text="{localModel>SalesOrderDate}" />
+                          <Text text="{localModel>TotalNetAmount}" />
+                          <Text text="{localModel>RequestedDeliveryDate}" />
+                              <Text text="{localModel>DeliveryStatusText}" />
+                          		<Button
+			id="Materialdetailsdelivered"
+			text="See details"
+            type="Success"
+			width="150px"
+			press="Onpressquickview"
+			class="sapUiSmallMarginBottom"
+			ariaHasPopup="Dialog"
+            icon="sap-icon://show" />
+                        
+                     
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </VBox>
+                        </IconTabFilter>
+
+                          <IconTabSeparator icon="sap-icon://process"   visible="false" />
+<IconTabFilter
+    icon="sap-icon://create-entry-time"
+    iconColor="Negative"
+    key="CreateOrdreKey"
+    design="Horizontal"
+    text="Create Order"
+>
+<Panel expandable="true" headerText="Material Selection">
+  <HBox justifyContent="Center" alignItems="Center" width="100%">
+    <VBox justifyContent="Center" alignItems="Center" height="100%" width="auto">
+      <Input 
+        id="MaterialInput" 
+        width="400px" 
+        showValueHelp="true" 
+   
+        valueHelpRequest="handleValueHelp" />
+    </VBox>
+
+    <!-- Apply custom margin class to the second VBox -->
+    <VBox justifyContent="Center" alignItems="Center" height="100%" width="auto" class="customMargin">
+      <Input 
+        id="ScannedInput" 
+        width="200px" 
+        editable="false"
+        value="{localModel>/ScanProduct}" 
+        visible="{localModel>/isButtonVisible}" />
+    </VBox>
+
+    <VBox class="sapUiSmallMargin" width="auto">
+      <ndc:BarcodeScannerButton
+        id="sampleBarcodeScannerButton"
+        scanSuccess="onScanSuccess"
+        scanFail="onScanError"
+        disableBarcodeInputDialog="true" />
+    </VBox>
+  </HBox>
+</Panel>
+
+
+
+     <Panel expandable="true" expanded="{localModel>/isButtonVisible}" headerText="Material Details" expand="onExpandPanel" visible="true">
+     
+ <HBox>
+    <!-- Image section -->
+    <VBox width="50%" alignItems="Center" justifyContent="Center">
+        <Image src="{= ${localModel>/ParticularMaterial/Product} === 'FG011' ? ${localModel>/FG011} : 
+           ${localModel>/ParticularMaterial/Product} === 'FG031' ? ${localModel>/FG031} : 
+           ${localModel>/ParticularMaterial/Product} === 'FG032' ? ${localModel>/FG032} : 
+           'defaultImagePath.png'}"  width="70%" height="auto" />
+    </VBox>
+
+    <!-- Details section -->
+    <VBox width="50%">
+        <!-- Name Field -->
+        <Label text="Name" />
+        <Input value="{localModel>/ParticularMaterial/Product}" editable="false" />
+
+        <!-- Description Field -->
+        <Label text="Product Type" />
+        <Input value="{localModel>/ParticularMaterial/ProductType}" editable="false" />
+
+        <!-- Item Category Field -->
+        <Label text="Weight Unit" />
+        <Input value="{localModel>/ParticularMaterial/WeightUnit}" editable="false" />
+
+        <!-- Requested Delivery Date Field -->
+        <Label text="Gross Weight" />
+        <Input value="{localModel>/ParticularMaterial/GrossWeight}" editable="false" />
+
+        <!-- Quantity Field -->
+        <Label text="Quantity" />
+            <HBox>
+            <Button text="-" press="onDecreaseQuantity" class="boldButton" />
+            <Text text="{localModel>/quantity}" class="sapUiTinyMargin" />
+            <Button text="+" press="onIncreaseQuantity" class="boldButton" />
+        </HBox>
+
+        <!-- Price Field -->
+        <Label text="ProductGroup" />
+        <Input value="{localModel>/ParticularMaterial/ProductGroup}" editable="false" />
+
+        <!-- Add to Cart Button -->
+          <FlexBox justifyContent="End" alignItems="End" direction="Column" height="100%">
+        <Button icon="sap-icon://cart-4" text="Add to Cart" press="onAddToCart" type="Success" />
+    </FlexBox>
+    </VBox>
+</HBox>
+
+    </Panel>
+</IconTabFilter>
+ <IconTabSeparator icon="sap-icon://process" />
+<IconTabFilter
+    icon="sap-icon://cart"
+    iconColor="Critical"
+    key="cartdata"
+    design="Horizontal"
+    count="{localModel>/CartCount}"
+    text="Cart"
+>
+
+   <HBox width="100%" justifyContent="SpaceBetween">
+    <!-- Left Side: Cart Table -->
+    <VBox class="sapUiSmallMargin" width="90%" >
+        <Table
+            id="cartTable"
+          items="{localModel>/CustWiseCart}"
+          >
+
+        
+            <columns>
+             <Column>
+                    <Text text="Image" />
+                </Column>
+                <Column>
+                    <Text text="Product Name" />
+                </Column>
+              
+                <Column>
+                    <Text text="Quantity" />
+                </Column>
+                
+                <Column>
+                    <Text text="Actions" />
+                </Column>
+              
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                     <Image src="{= ${localModel>material} === 'FG011' ? ${localModel>/FG011} : 
+           ${localModel>material} === 'FG031' ? ${localModel>/FG031} : 
+           ${localModel>material} === 'FG032' ? ${localModel>/FG032} : 
+           'defaultImagePath.png'}" width="70%" height="auto" />
+                        <Text text="{localModel>material}" />
+                    
+                        <HBox>
+                            <!-- <Button text="-" press="onDecreaseQuantityfromcart" class="boldButton" /> -->
+                            <Text text="{localModel>RequestedQuantityI}" class="sapUiTinyMargin" />
+                            <!-- <Button text="+" press="onIncreaseQuantityfromcart" class="boldButton" /> -->
+                        </HBox>
+                     
+<HBox>
+    <Button icon="sap-icon://edit" type="Success" press="onEditItemfromcart">
+        <layoutData>
+            <FlexItemData growFactor="2" />
+        </layoutData>
+    </Button>
+    <Button icon="sap-icon://delete" type="Critical" press="onDeleteItem">
+        <layoutData>
+            <FlexItemData growFactor="1" />
+        </layoutData>
+    </Button>
+</HBox>
+
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </VBox>
+
+    <!-- Right Side: Card -->
+<n:Card class="sapUiMediumMargin" width="580px">
+    <n:content>
+        <VBox class="sapUiSmallMargin" justifyContent="Center" alignItems="Center">
+           
+                   <VBox class="sapUiSmallMargin" justifyContent="Center" alignItems="Center" height="100%">
+           
+            <Text text="Summary of Cart" class="subtotalText" />
+        </VBox>
+
+          <HBox justifyContent="Start" width="100%">
+              <Button text="Simulate Your Order" type="Success" press="onSimulateOrder" class="sapUiSmallMargin buttonShiftUp" icon="sap-icon://simulate" />
+            </HBox>
+               
+        
+            <Table
+             
+                id="cartTable2"
+                items="{localModel>/SimulateResponseItem}">
+                <columns>
+                    <Column>
+                        <Text text="Items" />
+                    </Column>
+                    <Column>
+                        <Text text="Quantity" />
+                    </Column>
+                    <Column>
+                        <Text text="Cost Amount" />
+                    </Column>
+                    <Column>
+                        <Text text="Net Amount" />
+                    </Column>
+                    <Column>
+                        <Text text="Tax Amount" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{localModel>Material}" />
+                            <Text text="{localModel>RequestedQuantity}" />
+                            <Text text="{localModel>CostAmount}" />
+                            <Text text="{localModel>NetAmount}" />
+                            <Text text="{localModel>TaxAmount}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+
+            <!-- Place Order Button -->
+            <HBox justifyContent="SpaceBetween" class="sapUiSmallMargin" alignItems="Center">
+                <GenericTag
+                    visible="{localModel>/simualtebutton}" 
+                    text="Total Net Amount: {localModel>/SimulateResponseOrder}"
+                    design="StatusIconHidden"
+                    status="Success"
+                    class="sapUiSmallMargin">
+                    <ObjectNumber state="Success" emphasized="true" />
+                </GenericTag>
+                <Button text="Place Your Order" type="Emphasized" press="onPlaceOrder" class="sapUiSmallMargin" visible="{localModel>/simualtebutton}" />
+                 <Button text="Generate PDF" icon="sap-icon://pdf-attachment" type="Critical" press="onGeneratePDF123" class="sapUiSmallMargin" visible="{localModel>/simualtebutton}" />
+            </HBox>
+        </VBox>
+    </n:content>
+</n:Card>
+
+</HBox>
+
+</IconTabFilter>
+<IconTabSeparator icon="sap-icon://process" />
+ <IconTabFilter
+                            icon="sap-icon://business-objects-experience"
+                            iconColor="Contrast"
+                            key="icon1"
+                            design="Horizontal"
+                            text="Statistics"
+                        >
+             
+
+
+    
+    <layout:FixFlex minFlexSize="250">
+        <layout:flexContent>
+            <viz:VizFrame id="idVizFrame1" uiConfig="{applicationSet:'fiori'}" 
+                height="100%" width="100%" vizType="column">
+                
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{localModel>/SalesOrdersPerMonth}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Month" value="{localModel>Month}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Order Count" value="{localModel>OrderCount}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Order Count" />
+                    <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Month" />
+                </viz:feeds>
+
+                <viz:dependents>
+                    <viz:Popover id="idPopOver1"></viz:Popover>
+                </viz:dependents>
+            </viz:VizFrame>
+        </layout:flexContent>
+    </layout:FixFlex>
+    
+<layout:FixFlex id="chartFixFlex" minFlexSize="250">
+        <layout:flexContent>
+            <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}"
+                height="100%" width="100%" vizType="pie">
+                
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{localModel>/SalesOrdersPerMonth}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Month" value="{localModel>Month}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Order Count" value="{localModel>OrderCount}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="size" type="Measure" values="Order Count" />
+                    <viz.feeds:FeedItem uid="color" type="Dimension" values="Month" />
+                </viz:feeds>
+
+                <viz:dependents>
+                    <viz:Popover id="idPopOver"></viz:Popover>
+                </viz:dependents>
+            </viz:VizFrame>
+        </layout:flexContent>
+    </layout:FixFlex>
+
+    <layout:FixFlex id="chartFixFlex2" minFlexSize="250">
+        <layout:flexContent>
+            <viz:VizFrame id="idVizFrame2" uiConfig="{applicationSet:'fiori'}"
+                height="100%" width="100%" vizType="donut">
+                
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{localModel>/SalesOrdersPerMonth}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Month" value="{localModel>Month}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Order Count" value="{localModel>OrderCount}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="size" type="Measure" values="Order Count" />
+                    <viz.feeds:FeedItem uid="color" type="Dimension" values="Month" />
+                </viz:feeds>
+
+                <viz:dependents>
+                    <viz:Popover id="idPopOver2"></viz:Popover>
+                </viz:dependents>
+            </viz:VizFrame>
+        </layout:flexContent>
+    </layout:FixFlex>
+
+     <layout:FixFlex minFlexSize="250">
+        <layout:flexContent>
+            <viz:VizFrame id="idVizFrame3" uiConfig="{applicationSet:'fiori'}" 
+                height="100%" width="100%" vizType="bar">
+                
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{localModel>/SalesOrdersPerMonth}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Month" value="{localModel>Month}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Order Count" value="{localModel>OrderCount}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Order Count" />
+                    <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Month" />
+                </viz:feeds>
+
+                <viz:dependents>
+                    <viz:Popover id="idPopOver3"></viz:Popover>
+                </viz:dependents>
+            </viz:VizFrame>
+        </layout:flexContent>
+    </layout:FixFlex>
+    
+
+                        </IconTabFilter>
+
+<!-- <IconTabSeparator icon="sap-icon://process" />
+ <IconTabFilter
+                            icon="sap-icon://my-sales-order"
+                            iconColor="Negative"
+                            key="icon1"
+                            design="Horizontal"
+                            text="Invoice"
+ >
+<ScrollContainer
+		width="50%" -->
+        
+		<!-- > -->
+		<!-- <FlexBox direction="Column" renderType="Div" > -->
+			
+			<!-- <PDFViewer  showDownloadButton="true"   source="{localModel>/Source}" isTrustedSource="true" title="{localModel>/Title}"  > -->
+				<!-- <layoutData>
+					<FlexItemData growFactor="1" />
+				</layoutData> -->
+			<!-- </PDFViewer> -->
+<!-- 
+        <core:HTML
+ 
+    content="&lt;div style=&quot;overflow-y: auto; height: 600px;&quot;&gt;&lt;embed src=&quot;{localModel>/Source}&quot; type=&quot;application/pdf&quot; width=&quot;100%&quot; height=&quot;100%&quot;/&gt;&lt;/div&gt;" /> -->
+<!-- <HBox alignContent="Center" alignItems="Center"> -->
+
+
+
+<!-- <Panel width="100%" headerText="Click on Download PDF to download the invoice">
+<core:HTML
+    content="&lt;div style=&quot;width: 100%; text-align: left; padding-left: 10px;&quot;&gt;
+    &lt;a href=&quot;{localModel>/Source}&quot; download style=&quot;font-size: 18px; color: #007BFF; text-decoration: none; display: inline;&quot;&gt;
+    &lt;span style=&quot;font-size: 20px;&quot;&gt;&#128073;&lt;/span&gt; Download PDF&lt;/a&gt;
+    &lt;/div&gt;" /> -->
+
+
+
+<!-- </Panel> -->
+<!--  -->
+
+ 
+		<!-- </FlexBox> -->
+	<!-- </ScrollContainer> -->
+                        <!-- </IconTabFilter> -->
+                    </items>
+                </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>

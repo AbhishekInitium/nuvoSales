@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+		
+		title="Material List"
+		items="{localModel>/MaterialList}"
+			liveChange=".onValueHelpSearch"
+		confirm="onPressValuHelp1"
+		cancel=".onValueHelpClose">
+		<StandardListItem
+			iconDensityAware="false"
+			iconInset="false"
+			title="{localModel>Product}" 
+            description="{localModel>ProductType}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],e=>{"use strict";return e.extend("nuvo.controller.View1",{onInit(){var e="./images/Nuvo.png";this.getView().setModel(new sap.ui.model.json.JSONModel({image:e}),"imageModel")},onNavigateToDetailPage:function(){this.getOwnerComponent().getRouter().navTo("detailPageRoute")}})});
+//# sourceMappingURL=View1.controller.js.map

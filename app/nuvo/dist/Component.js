@@ -1,0 +1,2 @@
+sap.ui.define(["sap/ui/core/UIComponent","nuvo/model/models"],(e,t)=>{"use strict";return e.extend("nuvo.Component",{metadata:{manifest:"json",interfaces:["sap.ui.core.IAsyncContentCreation"]},init(){e.prototype.init.apply(this,arguments);this.getRouter().initialize();this.setModel(t.createDeviceModel(),"device");this.setModel(new sap.ui.model.json.JSONModel({}),"globalModel")}})});
+//# sourceMappingURL=Component.js.map

@@ -1,0 +1,238 @@
+/* Custom styles for left-top logo */
+.left-top-logo {
+    position: fixed;  /* Fix the logo at the top-left of the page */
+    top: 0;           /* Align the logo to the top */
+    left: 0;          /* Align the logo to the left */
+    z-index: 10;      /* Ensure it's on top of other content */
+    margin: 10px;     /* Optional margin around the logo */
+}
+
+/* Custom styles for right-center image */
+.right-center-container {
+    position: absolute;
+    top: 40%;           /* Vertically center the content */
+    right: 0;           /* Align the content to the right edge */
+    transform: translateY(-50%) translateX(200px);; /* Ensure it's centered vertically */
+    display: flex;
+    align-items: center; /* Vertically align content inside the HBox */
+    justify-content: flex-start; /* Align items to the left */
+    z-index: 10;
+    min-width: 300px;   
+}
+
+/* Styling for the "Welcome to Nuvo" text */
+
+/* Custom styles for the "Welcome to Nuvo" text */
+.welcome-text {
+    font-size: 40px;            /* Increased font size */
+    font-weight: bold;          /* Bold text */
+    margin-right: 20px;         /* Space between text and image */
+    color: #8B0000;             /* Dark red color */
+    white-space: nowrap;        /* Prevent text from wrapping */
+    margin-left: 20px;          /* Space from the left to prevent cutting */
+   
+}
+
+/* Custom styles for the second line of text */
+.second-text {
+    font-size: 15px;            /* Increased font size */
+   
+    margin-right: 20px;         /* Space between text and image */
+    color: #8B0000;             /* Dark red color */
+    white-space: nowrap;        /* Prevent text from wrapping */
+    margin-left: 20px;          /* Space from the left to prevent cutting */
+   
+}
+
+/* Custom styles for the button */
+.custom-button {
+    height: 80px;                 /* Increase the button height */
+    min-width: 250px;             /* Set a minimum width for the button */
+    padding: 0 30px;              /* Add horizontal padding */
+    margin-top: 20px;             /* Shift the button slightly down */
+    margin-left: 20px;            /* Shift the button slightly to the right */
+    font-size: 22px;              /* Adjust font size */
+    line-height: 80px;            /* Vertically center the text inside the button */
+   
+    text-align: center;           /* Ensure text is centered */
+ 
+    align-items: center;          /* Vertically align icon and text */
+    justify-content: center;      /* Horizontally center icon and text */
+}
+
+/* Style for the text container */
+.text-container {
+    position: absolute;      /* Use absolute positioning to place the text */
+    top: 20px;               /* Space from the top */
+    right: 20px;             /* Space from the right */
+    display: flex;
+    flex-direction: column;  /* Stack the text vertically */
+    align-items: flex-end;   /* Align the text to the right */
+}
+.buttonShiftUp {
+    margin-top: -4px;
+}
+
+
+/* Style for the first line of text (larger font size) */
+.large-text {
+    font-size: 50px;         /* Larger font size */
+    font-weight: bold;       /* Bold text */
+    color: #8B0000;          /* Dark red color */
+    margin-top:16px;      /* Space below the large text */
+    margin-right: 20px;
+    font-family: 'Georgia', sans-serif; 
+}
+
+/* Style for the second line of text (smaller font size) */
+.small-text {
+    font-size: 30px;         /* Smaller font size */
+    font-weight: normal;     /* Regular weight */
+    color: #8B0000;          /* Dark red color */
+    line-height: 1.5;        /* Adjust line height for readability */
+    margin-right: 20px;
+    font-family: 'Georgia', serif; /* Change font to Georgia or fallback to serif */
+}
+/* Center container styling */
+.center-container {
+    height: 100vh;            /* Full viewport height */
+    display: flex;
+    flex-direction: column;   /* Stack the label and dropdown vertically */
+    justify-content: center;  /* Center vertically */
+    align-items: center;      /* Center horizontally */
+}
+
+/* Style for the dropdown label */
+.dropdown-label {
+    font-size: 18px;          /* Slightly larger font size for the label */
+    margin-bottom: 20px;      /* Space between the label and dropdown */
+    font-weight: bold;        /* Bold font for the label */
+}
+
+/* Style for the dropdown */
+.customer-dropdown {
+    font-size: 16px;          /* Adjust font size for dropdown items */
+    padding: 10px;            /* Optional: Add padding for better spacing */
+}
+/* Add background color and padding to the logo panel */
+.logo-panel {
+    background-color: #e6f4f9; /* Light grey background */
+    
+    padding: 20px;             /* Add padding inside the panel */
+    margin-top: 20px;
+    margin-bottom: 20px;       /* Add space below the panel */
+}
+
+/* Add background color and padding to the dropdown panel */
+.dropdown-panel {
+    background-color: #e6f4f9; /* Light grey background */
+    padding: 20px;             /* Add padding inside the panel */
+    margin-top: 20px;          /* Add space above the panel */
+}
+
+/* Style for the dropdown label */
+.dropdown-label {
+    font-size: 18px;           /* Slightly larger font size for the label */
+    font-weight: bold;         /* Bold font for the label */
+    margin-bottom: 20px;       /* Space between the label and dropdown */
+}
+
+/* Center container styling */
+.center-container {
+    display: flex;
+    flex-direction: column;    /* Stack the label and dropdown vertically */
+    justify-content: center;   /* Center vertically */
+    align-items: center;       /* Center horizontally */
+}
+
+/* Dropdown styling */
+.customer-dropdown {
+    font-size: 16px;           /* Adjust font size for dropdown items */
+    padding: 10px;             /* Optional: Add padding for better spacing */
+}
+.proceed-button {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+}
+.custom-label-color {
+    color: #8B0000;
+    font-weight: bold; /* Optional: to make it bold */
+    font-size: 1rem; /* Optional: adjust font size */
+}
+.leftSidePanel {
+    position: absolute;
+    left: 0; /* Ensures it aligns on the left */
+    right: auto; /* Removes any default right-side positioning */
+}
+.boldButton {
+    font-weight: bold;
+    
+}
+.subtotalText {
+    font-size: 1.5rem; /* Bigger font size */
+    color: #8B0000;
+    font-weight: bold; /* Bold text */
+    margin-bottom: 0.5rem; /* Add some spacing below the text */
+}
+.customMargin {
+    margin-left: 20px; /* Adjust this value as needed */
+}
+.rightAlignedPanel {
+    display: flex;
+    justify-content: flex-end;
+    width: 200%;
+}
+.customTile {
+    background-color: #e4e4f3; /* Light gray background */
+    border-radius: 8px; /* Optional: Rounded corners */
+}
+
+.smallTile {
+    width: 150px; /* Set desired width */
+    max-width: 200px; /* Ensure it doesn't exceed this width */
+    min-width: 100
+    px; /* Optionally set a minimum width */
+}
+.noMarginGrid {
+    margin: 0 !important; /* Remove all margins */
+    padding: 0 !important; /* Remove all padding */
+}
+/* Custom button style */
+.customButton {
+    width: 200px !important;
+    height: 300px !important;
+}
+/* Change background color of the card */
+.myCustomerCard {
+    background-color:#e4e4f3 !important; /* Light grey background */
+}
+.noMarginBottom {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+/* Custom class for the Switch Customer button */
+.switchCustomerButton {
+    min-width: 150px !important;  /* Set the minimum width */
+    width: auto !important;       /* Adjust width to fit content */
+}
+.greenText {
+    color: green !important;
+    font-weight: bold;    
+}
+
+.redText {
+    color: red !important;
+    font-weight: bold; 
+}
+.blinkText {
+    animation: blink 2s infinite; /* Infinite loop, 1 second duration */
+}
+
+/* Define the animation */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
