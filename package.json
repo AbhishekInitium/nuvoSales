@@ -12,7 +12,8 @@
     "@sap/cds": "^8",
     "@sap/hana-client": "^2.23.24",
     "@sap/xssec": "^4",
-    "express": "^4"
+    "express": "^4",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.8.0",
