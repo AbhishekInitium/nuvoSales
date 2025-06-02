@@ -1,0 +1,108 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    	xmlns:m="sap.m"
+	xmlns:c="sap.suite.ui.commons"
+ 
+>
+    <Dialog showHeader="true" contentWidth="80%" contentHeight="80%">
+    <Panel 	headerText="Material Details">
+           <GenericTag
+            text="Total Material: {localModel>/MaterialCount}"
+            
+            design="StatusIconHidden"
+            status="Information"
+            class="sapUiSmallMargin"
+        >
+            <ObjectNumber
+                state="Information"
+                emphasized="true"
+            />
+        </GenericTag>
+         <GenericTag
+            text="Delivered Material: {localModel>/deliveredCount}"
+            design="StatusIconHidden"
+            status="Success"
+            class="sapUiSmallMargin"
+        >
+            <ObjectNumber
+                state="Success"
+                emphasized="true"
+            />
+        </GenericTag>
+         <GenericTag
+            text="Partially Delivered Material: {localModel>/partiallyDeliveredcount}"
+            design="StatusIconHidden"
+            status="Warning"
+            class="sapUiSmallMargin"
+        >
+            <ObjectNumber
+                state="Warning"
+                emphasized="true"
+            />
+        </GenericTag>
+         <GenericTag
+            text="Not Delivered Material: {localModel>/notDeliveredCount}"
+            design="StatusIconHidden"
+            status="Error"
+            class="sapUiSmallMargin"
+        >
+            <ObjectNumber
+                state="Error"
+                emphasized="true"
+            />
+        </GenericTag>
+  
+        <Table    items="{localModel>/ItemHistory}" width="100%" fixedLayout="false">
+
+            <columns>
+                <Column>
+                    <Label text="Name of Material" width="auto"/>
+                </Column>
+
+                <Column>
+                    <Label text="Quantity" width="auto"/>
+                </Column>
+
+                <Column>
+                    <Label text=" Net Amount" width="auto"/>
+                </Column>
+
+                <Column>
+                    <Label text="Delivery Status"   />
+                </Column>
+
+                
+            </columns>
+
+                <ColumnListItem  >
+                    <cells>
+	                 
+                      
+                        <Text text="{localModel>Material}" />
+                          <Text text="{localModel>RequestedQuantity}" />
+                           <Text text="{localModel>NetAmount}" />
+                             <Text text="{localModel>DeliveryStatusText}" />
+                     
+                    </cells>
+                </ColumnListItem>
+            </Table>            
+       </Panel>
+
+<Panel >
+
+
+</Panel>
+  
+          
+
+           <buttons>
+            <Button text="Cancel" press="onCancelFragment" type="Reject"  />
+        </buttons>
+
+
+        
+    </Dialog>
+</core:FragmentDefinition>

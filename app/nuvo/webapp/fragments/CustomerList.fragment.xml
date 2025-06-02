@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+		
+		title="Customer List"
+		items="{localModel>/CustomerMasterList}"
+			liveChange=".onValueHelpSearch1"
+		confirm="onPressValuHelp"
+		cancel=".onCancelValueHelp">
+		<StandardListItem
+			iconDensityAware="false"
+			iconInset="false"
+			title="{localModel>CustomerName}" 
+            description="{localModel>Customer}"/>
+	</SelectDialog>
+
+               <!-- <Select
+                      
+                        width="500px"
+                        forceSelection="false"
+                    
+                        items="{
+                            path: 'localModel>/CustomerMasterList'    
+                           
+                         }">
+                        <core:Item
+                            key="{localModel>Customer}"   
+                            text="{localModel>Customer}"   
+                        />
+                          
+                    </Select>  -->
+</core:FragmentDefinition>

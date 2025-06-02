@@ -1,0 +1,43 @@
+<mvc:View controllerName="salesappfiori.controller.MainTabsoption2"
+    displayBlock="true"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:m="sap.m"
+	xmlns="sap.suite.ui.commons"
+    xmlns:core="sap.ui.core"
+    height="100%">
+  
+ 
+   <m:Page title="Order History - Process Flow">
+        <m:Panel>
+            <ProcessFlow
+                id="orderProcessFlow"
+                nodes="{/nodes}"
+                lanes="{/lanes}"
+                nodePress="onNodePress">
+                <nodes>
+                    <ProcessFlowNode
+                        laneId="{lane}"
+                        nodeId="{id}"
+                        title="{title}"
+                        titleAbbreviation="{titleAbbreviation}"
+                        children="{children}"
+                        state="{state}"
+                        stateText="{stateText}"
+                        texts="{texts}"
+                        highlighted="{highlighted}"
+                        focused="{focused}" 
+                         />
+                </nodes>
+                <lanes>
+                    <ProcessFlowLaneHeader
+                        laneId="{id}"
+                        text="{label}"
+                        position="{position}" 
+                 		iconSrc="{icon}"
+                        state="{state}"
+                        />
+                </lanes>
+            </ProcessFlow>
+        </m:Panel>
+    </m:Page>
+</mvc:View>

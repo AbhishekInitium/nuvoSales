@@ -1,0 +1,130 @@
+
+
+GET http://localhost:4004/odata/v4/my/Cartdata?$filter=customerid eq '17100001' and isorderconfirm eq '1'
+
+
+     url: url + "Cartdata" + '?$filter=customerid eq %27' + customerID + '%27and isorderconfirm eq ',
+     
+https://port4004-workspaces-ws-q89fj.us10.applicationstudio.cloud.sap/odata/v4/my/Cartdata?$filter=customerid%20eq%20%2717100001%27%20isorderconfirm%20eq%20%271%27
+###
+POST http://localhost:4004/odata/v4/my/getParticularItemList
+Content-Type: application/json
+
+{
+  "product": "FG031"
+}
+
+
+###
+POST http://localhost:46019/odata/v4/my/PostSalesOrderData
+Content-Type: application/json
+
+{"encode":"eyJTYWxlc09yZGVyVHlwZSI6Ik9SIiwiU29sZFRvUGFydHkiOiIxNzEwMDAwNiIsInRvX0l0ZW0iOnsicmVzdWx0cyI6W3siTWF0ZXJpYWwiOiJCMDAyIiwiUmVxdWVzdGVkUXVhbnRpdHkiOiI1IiwiUmVxdWVzdGVkUXVhbnRpdHlJU09Vbml0IjoiUENFIn0seyJNYXRlcmlhbCI6IkIwMDIiLCJSZXF1ZXN0ZWRRdWFudGl0eSI6IjIiLCJSZXF1ZXN0ZWRRdWFudGl0eUlTT1VuaXQiOiJQQ0UifV19fQ=="}
+
+
+###
+POST http://localhost:4004/odata/v4/my/getSalesOrderHistoryList
+Content-Type: application/json
+
+{
+    "SoldToParty": "17100100"
+
+
+}
+
+
+###
+POST http://localhost:4004/odata/v4/my/getSalesOrderHistoryList
+Content-Type: application/json
+
+{
+    "SoldToParty": "17100001"
+
+}
+
+###
+POST http://localhost:4004/odata/v4/my/SimulatetSalesOrderData
+Content-Type: application/json
+
+{"encode":"eyJTYWxlc09yZGVyVHlwZSI6Ik9SIiwiU29sZFRvUGFydHkiOiIxNzEwMDAwMSIsInRvX1ByaWNpbmciOnt9LCJ0b19JdGVtIjpbeyJTYWxlc09yZGVySXRlbSI6IjEwIiwiTWF0ZXJpYWwiOiJGRzAxMSIsIlJlcXVlc3RlZFF1YW50aXR5IjoiNCIsIlJlcXVlc3RlZFF1YW50aXR5SVNPVW5pdCI6IlBDRSJ9LHsiU2FsZXNPcmRlckl0ZW0iOiIyMCIsIk1hdGVyaWFsIjoiRkcwMzEiLCJSZXF1ZXN0ZWRRdWFudGl0eSI6IjUiLCJSZXF1ZXN0ZWRRdWFudGl0eUlTT1VuaXQiOiJQQ0UifV19"}
+
+
+
+###
+POST http://localhost:4004/odata/v4/my/getCustomerListCPI
+Content-Type: application/json
+
+{
+
+}
+
+
+###
+POST http://localhost:4004/odata/v4/my/getCustomerBasicDetail
+Content-Type: application/json
+
+{
+    "Customer": "17100001"
+
+}
+
+
+
+
+###
+POST http://localhost:46035/odata/v4/my/getBillingDocument
+Content-Type: application/json
+
+{"SalesOrder":"27"}
+###
+POST http://localhost:4004/odata/v4/my/getInvoicePDF
+Content-Type: application/json
+
+{
+    "BillingDocument": "90000004"
+}
+
+###
+POST http://localhost:4004/odata/v4/my/AuditLog
+Content-Type: application/json
+
+{
+  "CustomerID"   : "17100001",
+    "CustomerName" : "Test1",
+    "ActionTaken"  : "dfd",
+    "FunctionName" : "df",
+    "AnyComments"  : "@Variable_Name = Variable_Value",
+    "Request1"     :"Cache-Control: ",
+    "Request2"     : "{"BillingDocument": "90000004"
+}"
+}
+###
+POST http://localhost:36145/odata/v4/my/getInvoiceStatus
+Content-Type: application/json
+
+{
+   
+}
+
+###
+POST http://localhost:41259/odata/v4/my/getSalesOrderHistoryListwithInvoice
+Content-Type: application/json
+
+{
+    "SoldToParty": "17100100",
+    "OverallTotalDeliveryStatus":""
+
+}
+
+###
+POST http://localhost:35175/odata/v4/my/PlaceSalesOrder
+Content-Type: application/json
+
+
+{
+    "SoldToParty": "17100100",
+      "SalesOrder" : "145",
+     "materials":"{\"FG031\":1,\"FG011\":1}"
+
+
+}

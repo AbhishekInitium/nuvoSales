@@ -1,0 +1,141 @@
+_schema-version: 3.3.0
+ID: NuvoApp
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: NuvoApp-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: NuvoApp-db
+  - name: uaa_NuvoApp
+  - name: NuvoApp-destination-service
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    readiness-health-check-http-endpoint: /health
+    readiness-health-check-type: http
+  build-parameters:
+    builder: npm
+- name: NuvoApp-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: NuvoApp-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: NuvoApp-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: NuvoApp-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - nuvo.zip
+      name: nuvo
+      target-path: resources/
+- name: nuvo
+  type: html5
+  path: app/nuvo
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: NuvoApp-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: NuvoApp-destination-service
+    parameters:
+      content-target: true
+  - name: NuvoApp-repo-host
+    parameters:
+      service-key:
+        name: NuvoApp-repo-host-key
+  - name: uaa_NuvoApp
+    parameters:
+      service-key:
+        name: uaa_NuvoApp-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: nuvoappsales_NuvoApp_repo_host
+          ServiceInstanceName: NuvoApp-html5-service
+          ServiceKeyName: NuvoApp-repo-host-key
+          sap.cloud.service: nuvoappsales
+        - Authentication: OAuth2UserTokenExchange
+          Name: nuvoappsales_uaa_NuvoApp
+          ServiceInstanceName: NuvoApp-xsuaa-service
+          ServiceKeyName: uaa_NuvoApp-key
+          sap.cloud.service: nuvoappsales
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+resources:
+- name: NuvoApp-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: NuvoApp-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: NuvoApp-html5-service
+    service-plan: app-host
+- name: NuvoApp-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: NuvoApp-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: NuvoApp-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: uaa_NuvoApp
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: NuvoApp
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: NuvoApp-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

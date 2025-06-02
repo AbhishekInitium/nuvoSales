@@ -1,0 +1,15 @@
+<core:FragmentDefinition 
+ xmlns:core="sap.ui.core"
+  xmlns="sap.m" >
+ 
+ <Dialog showHeader="true" contentWidth="80%" contentHeight="80%">
+  <!-- <html:iframe id="map_iframe" src="img_girl.jpg" target="_top" height="100%" width="100%"></html:iframe> -->
+    <FlexBox direction="Row" fitContainer="true" renderType="Div">
+                <PDFViewer class="sapUiSmallMarginEnd" source="{/Source}" title="{/Title1}" height="{/Height}" width="auto" isTrustedSource="true">
+                    <layoutData>
+                        <FlexItemData growFactor="1"/>
+                    </layoutData>
+                </PDFViewer>
+            </FlexBox>
+            </Dialog>
+</core:FragmentDefinition >
